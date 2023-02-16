@@ -3,10 +3,18 @@ import numpy as np
 from sklearn.manifold import MDS
 plt.style.use('seaborn-whitegrid')
 
-t = np.linspace(0, 2*np.pi, 100)
+eps = 0.00
+n = 100
+t = np.linspace(0, 2*np.pi, n)
 x1 = np.sin(t)
 x2 = np.cos(t)
-X = np.vstack((x1, x2)).transpose()
+X = np.vstack((x1, x2)).transpose() + eps*np.random.rand(n, 2)
+X_more1 = np.zeros((0, 2)) 
+X_more2 = np.zeros((0, 2)) 
+X_more1[:,0] = .1
+X_more2[:,0] = -.1
+X = np.vstack((X, X_more1, X_more2))
+
 
 embedding = MDS(n_components=1)
 X_low = embedding.fit_transform(X)
